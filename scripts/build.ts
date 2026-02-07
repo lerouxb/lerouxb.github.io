@@ -99,13 +99,13 @@ for (const post of posts) {
 
   if (!html) {
     const renderedContent = md.render(post.content);
-    html = postTemplate(
-      permalink(post.filename),
-      post.datetimeISO,
-      post.datetimeReadable,
-      post.title,
-      renderedContent,
-    );
+    html = postTemplate({
+      permalink: permalink(post.filename),
+      datetimeISO: post.datetimeISO,
+      datetimeReadable: post.datetimeReadable,
+      title: post.title,
+      content: renderedContent,
+    });
     fs.writeFileSync(cacheFile, JSON.stringify({ hash, html }));
   }
 
@@ -120,7 +120,7 @@ for (let i = 0; i < posts.length; i++) {
   const next = i < posts.length - 1 ? permalink(posts[i + 1].filename) : '';
   const pageTitle = post.title || 'static-attic';
 
-  const page = outlineTemplate(pageTitle, html, prev, next);
+  const page = outlineTemplate({ title: pageTitle, posts: html, prev, next });
   const dir = path.join(outputDir, path.basename(post.filename, '.md'));
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.html'), page);
@@ -143,7 +143,12 @@ for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
 
   const next = pageNum < totalPages ? `/page/${pageNum + 1}/` : '';
 
-  const page = outlineTemplate('static-attic', postsHtml, prev, next);
+  const page = outlineTemplate({
+    title: 'static-attic',
+    posts: postsHtml,
+    prev,
+    next,
+  });
 
   if (pageNum === 1) {
     fs.writeFileSync(path.join(outputDir, 'index.html'), page);
