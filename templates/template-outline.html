@@ -1,96 +1,120 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${title}</title>
-    <style>
-      :root {
-        color-scheme: light dark;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${title}</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    body {
+      max-width: 80ch;
+      margin: 5ch auto;
+      font-family: sans-serif;
+    }
+
+    .global-header {
+      color: light-dark(#666, #ccc);
+      text-align: center;
+      margin-bottom: 5ch;
+      font-size: smaller;
+    }
+
+    .post-header {
+      text-align: center;
+    }
+
+    .post-header h1 {
+      font-size: inherit;
+      font-weight: inherit;
+      display: inline-block;
+      background-color: light-dark(#eee, #333);
+      padding: 0.5ch 1ch;
+      border-radius: 0.5ch;
+      margin: 0;
+    }
+
+    .post {
+      margin: 5ch 0;
+    }
+
+    .global-nav {
+      text-align: center;
+    }
+
+    .global-nav .pagination {
+      display: inline-block;
+      background-color: light-dark(#eee, #333);
+      padding: 0.5ch 1ch;
+      border-radius: 0.5ch;
+    }
+
+    .global-footer {
+      color: light-dark(#666, #ccc);
+      text-align: center;
+      margin-top: 5ch;
+      font-size: smaller;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .video-16-9 iframe {
+      aspect-ratio: 16 / 9;
+      height: auto;
+      width: 100%;
+    }
+
+    iframe {
+      margin: 1em auto;
+      display: block;
+    }
+
+    @media (prefers-color-scheme: dark) {
+
+      .shiki,
+      .shiki span {
+        color: var(--shiki-dark) !important;
+        background-color: var(--shiki-dark-bg) !important;
+        /* Optional, if you also want font styles */
+        font-style: var(--shiki-dark-font-style) !important;
+        font-weight: var(--shiki-dark-font-weight) !important;
+        text-decoration: var(--shiki-dark-text-decoration) !important;
       }
+    }
+  </style>
+</head>
 
-      body {
-        max-width: 80ch;
-        margin: 5ch auto;
-        font-family: sans-serif;
-      }
+<body>
+  <header class="global-header">
+    <p>
+      My name is Le Roux Bodenstein.<br />I am a software developer that
+      dabbles in electronics.<br />These are my musings.
+    </p>
+  </header>
 
-      .global-header {
-        color: light-dark(#666, #ccc);
-        text-align: center;
-        margin-bottom: 5ch;
-        font-size: smaller;
-      }
+  ${posts} ${prev || next ? `
+  <nav class="global-nav">
+    <div class="pagination">
+      ${prev ? `<a href="${prev}">prev</a>` : ''} ${prev && next ? '|' : ''}
+      ${next ? `<a href="${next}">next</a>` : ''}
+    </div>
+  </nav>
+  ` : ''}
 
-      .post-header {
-        text-align: center;
-      }
+  <footer class="global-footer">
+    <p>
+      Find me on
+      <a href="https://bsky.app/profile/lerouxb.bsky.social">Bluesky</a>,
+      <a href="https://github.com/lerouxb">GitHub</a> and
+      <a href="https://hachyderm.io/@lerouxb">Mastodon</a>.
+    </p>
+  </footer>
+</body>
 
-      .post-header h1 {
-        font-size: inherit;
-        font-weight: inherit;
-        display: inline-block;
-        background-color: light-dark(#eee, #333);
-        padding: 0.5ch 1ch;
-        border-radius: 0.5ch;
-        margin: 0;
-      }
-
-      .global-nav {
-        text-align: center;
-      }
-
-      .global-nav .pagination {
-        display: inline-block;
-        background-color: light-dark(#eee, #333);
-        padding: 0.5ch 1ch;
-        border-radius: 0.5ch;
-      }
-
-      .global-footer {
-        color: light-dark(#666, #ccc);
-        text-align: center;
-        margin-top: 5ch;
-        font-size: smaller;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        .shiki,
-        .shiki span {
-          color: var(--shiki-dark) !important;
-          background-color: var(--shiki-dark-bg) !important;
-          /* Optional, if you also want font styles */
-          font-style: var(--shiki-dark-font-style) !important;
-          font-weight: var(--shiki-dark-font-weight) !important;
-          text-decoration: var(--shiki-dark-text-decoration) !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header class="global-header">
-      <p>
-        My name is Le Roux Bodenstein.<br />I am a software developer that
-        dabbles in electronics.<br />These are my musings.
-      </p>
-    </header>
-
-    ${posts} ${prev || next ? `
-    <nav class="global-nav">
-      <div class="pagination">
-        ${prev ? `<a href="${prev}">prev</a>` : ''} ${prev && next ? '|' : ''}
-        ${next ? `<a href="${next}">next</a>` : ''}
-      </div>
-    </nav>
-    ` : ''}
-
-    <footer class="global-footer">
-      <p>
-        Find me on
-        <a href="https://bsky.app/profile/lerouxb.bsky.social">Bluesky</a>,
-        <a href="https://github.com/lerouxb">GitHub</a> and
-        <a href="https://hachyderm.io/@lerouxb">Mastodon</a>.
-      </p>
-    </footer>
-  </body>
 </html>

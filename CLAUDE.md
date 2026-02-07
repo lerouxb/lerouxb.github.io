@@ -44,7 +44,7 @@ type Post = {
 
 ### Images
 
-Images are allowed to go in `/input/images`. .png and .svg are allowed.
+Images are allowed to go in `/input/images`. .png, .jpg and .svg are allowed.
 
 ### Output
 
