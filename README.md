@@ -50,6 +50,7 @@ Your post content here with **markdown** support.
 ```
 
 **Metadata fields** (all optional):
+
 - `date`: ISO 8601 datetime string
 - `title`: Post title
 - `mood`: Current mood/theme
@@ -117,6 +118,7 @@ pnpm run validate
 Pushes to `main` automatically trigger a GitHub Actions workflow that builds and deploys to GitHub Pages.
 
 **Setup**:
+
 1. Go to repository Settings → Pages
 2. Set Source to "GitHub Actions"
 

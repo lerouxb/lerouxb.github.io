@@ -1,8 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  parseDateFromFilename,
-  toDatetimeReadable,
-} from './dates.ts';
+import { parseDateFromFilename, toDatetimeReadable } from './dates.ts';
 
 describe('parseDateFromFilename', () => {
   it('parses ISO 8601 timestamp from filename', () => {

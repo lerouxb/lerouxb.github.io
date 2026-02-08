@@ -3,7 +3,7 @@ import markdownItShiki from '@shikijs/markdown-it';
 
 export async function createMarkdownRenderer(): Promise<MarkdownIt> {
   const md = MarkdownIt({
-    html: true
+    html: true,
   });
   md.use(
     await markdownItShiki({

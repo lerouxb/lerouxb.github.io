@@ -1,10 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import {
-  parseDateFromFilename,
-  toDatetimeReadable,
-} from '../src/dates.ts';
+import { parseDateFromFilename, toDatetimeReadable } from '../src/dates.ts';
 import { createMarkdownRenderer } from '../src/markdown.ts';
 import { loadPostTemplate, loadOutlineTemplate } from '../src/templates.ts';
 import { filenameSchema } from '../src/filenames.ts';
@@ -80,11 +77,6 @@ const outlineTemplate = loadOutlineTemplate();
 const renderedSnippets: Map<string, string> = new Map();
 
 for (const post of posts) {
-  const inputContent = fs.readFileSync(
-    path.join(inputDir, post.filename),
-    'utf-8',
-  );
-
   let html: string | undefined;
 
   if (!html) {
@@ -173,7 +165,8 @@ function printTree(dir: string, prefix = '', isLast = true): void {
 
   const newPrefix = prefix + (isLast ? '    ' : '│   ');
   const entries = fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => {
-    if (a.isDirectory() === b.isDirectory()) return a.name.localeCompare(b.name);
+    if (a.isDirectory() === b.isDirectory())
+      return a.name.localeCompare(b.name);
     return a.isDirectory() ? -1 : 1;
   });
 

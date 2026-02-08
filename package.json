@@ -10,6 +10,7 @@
     "test:watch": "vitest",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "reformat": "prettier --write .",
     "validate": "node scripts/validate.ts",
     "new": "node scripts/new.ts",
     "check": "eslint . && prettier --check ."

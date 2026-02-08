@@ -8,4 +8,3 @@ export const filenameSchema = z.string().regex(filenamePattern, {
   message:
     'Filename must match YYYY-MM-DDThh:mm:ssZ_slug.md (e.g. 2026-02-05T21:38:22Z_arpeggiator.md)',
 });
-
