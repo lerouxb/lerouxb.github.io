@@ -4,11 +4,12 @@ import crypto from 'node:crypto';
 import matter from 'gray-matter';
 import {
   parseDateFromFilename,
-  toDatetimeISO,
   toDatetimeReadable,
 } from '../src/dates.ts';
 import { createMarkdownRenderer } from '../src/markdown.ts';
 import { loadPostTemplate, loadOutlineTemplate } from '../src/templates.ts';
+import { filenameSchema } from '../src/filenames.ts';
+import { postSchema } from '../src/types.zod.ts';
 
 const rootDir = path.resolve(import.meta.dirname, '..');
 const inputDir = path.join(rootDir, 'input');
@@ -33,7 +34,8 @@ type ParsedPost = {
   filename: string;
   datetimeISO: string;
   datetimeReadable: string;
-  title: string;
+  title?: string;
+  mood?: string;
   content: string;
 };
 
@@ -43,15 +45,29 @@ function permalink(filename: string): string {
 
 const posts: ParsedPost[] = [];
 for (const filename of files) {
+  const filenameResult = filenameSchema.safeParse(filename);
+  if (!filenameResult.success) {
+    throw filenameResult.error;
+  }
+
   const raw = fs.readFileSync(path.join(inputDir, filename), 'utf-8');
   const { data, content } = matter(raw);
+
+  const contentResult = postSchema.safeParse({ data, content });
+  if (!contentResult.success) {
+    throw contentResult.error;
+  }
+
   if (data.draft) continue;
+
+  const date = parseDateFromFilename(filename);
 
   posts.push({
     filename,
-    datetimeISO: toDatetimeISO(filename),
-    datetimeReadable: toDatetimeReadable(parseDateFromFilename(filename)),
-    title: (data.title as string) || '',
+    datetimeISO: date.toISOString(),
+    datetimeReadable: toDatetimeReadable(date),
+    title: data.title,
+    mood: data.mood,
     content,
   });
 }
@@ -103,7 +119,7 @@ for (const post of posts) {
       permalink: permalink(post.filename),
       datetimeISO: post.datetimeISO,
       datetimeReadable: post.datetimeReadable,
-      title: post.title,
+      title: post.title || '',
       content: renderedContent,
     });
     fs.writeFileSync(cacheFile, JSON.stringify({ hash, html }));

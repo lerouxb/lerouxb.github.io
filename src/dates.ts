@@ -19,10 +19,6 @@ export function parseDateFromFilename(filename: string): Date {
   return new Date(iso);
 }
 
-export function toDatetimeISO(filename: string): string {
-  return filename.slice(0, 20); // "YYYY-MM-DDThh:mm:ssZ"
-}
-
 export function toDatetimeReadable(date: Date): string {
   const day = DAYS[date.getUTCDay()];
   const d = date.getUTCDate();

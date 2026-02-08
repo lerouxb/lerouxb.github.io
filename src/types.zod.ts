@@ -3,7 +3,6 @@ import { z } from 'zod';
 
 export const postSchema = z.object({
   data: z.object({
-    date: z.string().optional(),
     title: z.string().optional(),
     mood: z.string().optional(),
     draft: z.boolean().optional(),

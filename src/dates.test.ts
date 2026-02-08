@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
   parseDateFromFilename,
-  toDatetimeISO,
   toDatetimeReadable,
 } from './dates.ts';
 
@@ -20,23 +19,6 @@ describe('parseDateFromFilename', () => {
   it('handles timestamps near end of day', () => {
     const date = parseDateFromFilename('2025-12-31T23:59:59Z_countdown.md');
     expect(date.toISOString()).toBe('2025-12-31T23:59:59.000Z');
-  });
-});
-
-describe('toDatetimeISO', () => {
-  it('extracts ISO timestamp from filename', () => {
-    expect(toDatetimeISO('2026-02-05T21:38:22Z_arpeggiator.md')).toBe(
-      '2026-02-05T21:38:22Z',
-    );
-  });
-
-  it('extracts timestamp from different slugs', () => {
-    expect(toDatetimeISO('2024-01-01T00:00:00Z_my-first-post.md')).toBe(
-      '2024-01-01T00:00:00Z',
-    );
-    expect(toDatetimeISO('2025-06-15T14:30:45Z_another-post.md')).toBe(
-      '2025-06-15T14:30:45Z',
-    );
   });
 });
 
