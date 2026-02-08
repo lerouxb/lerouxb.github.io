@@ -55,10 +55,6 @@ Generated HTML goes to `/output`. The site consists of:
 
 Draft posts (where `draft: true`) should be excluded from output.
 
-### Caching
-
-Cache post HTML snippets in /cache to avoid slow regeneration when rendering permalinks and index pages.
-
 ### Templating
 
 HTML output is generated using TypeScript tagged template literals — no template engine dependency. The template for a specific post is in `/templates/template-post.html`. The template for a page containing one or more posts is `/templates/template-outline.html`. We'll fill these templates using the "function constructor" method.

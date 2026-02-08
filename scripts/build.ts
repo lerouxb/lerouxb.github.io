@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import crypto from 'node:crypto';
 import matter from 'gray-matter';
 import {
   parseDateFromFilename,
@@ -14,14 +13,12 @@ import { postSchema } from '../src/types.zod.ts';
 const rootDir = path.resolve(import.meta.dirname, '..');
 const inputDir = path.join(rootDir, 'input');
 const outputDir = path.join(rootDir, 'output');
-const cacheDir = path.join(rootDir, 'cache');
 
 const POSTS_PER_PAGE = 5;
 
-// 1. Clean output, ensure cache exists
+// 1. Clean output
 fs.rmSync(outputDir, { recursive: true, force: true });
 fs.mkdirSync(outputDir, { recursive: true });
-fs.mkdirSync(cacheDir, { recursive: true });
 
 // 2. Read and parse posts, filter drafts, sort reverse-chronologically
 const files = fs
@@ -79,39 +76,16 @@ const md = await createMarkdownRenderer();
 const postTemplate = loadPostTemplate();
 const outlineTemplate = loadOutlineTemplate();
 
-// Read post template source for cache hashing
-const postTemplateSource = fs.readFileSync(
-  path.join(rootDir, 'templates', 'template-post.html'),
-  'utf-8',
-);
-
-// 5. Render post snippets with caching
+// 5. Render post snippets
 const renderedSnippets: Map<string, string> = new Map();
 
 for (const post of posts) {
-  const cacheFile = path.join(cacheDir, `${post.filename}.json`);
   const inputContent = fs.readFileSync(
     path.join(inputDir, post.filename),
     'utf-8',
   );
-  const hash = crypto
-    .createHash('sha256')
-    .update(inputContent)
-    .update(postTemplateSource)
-    .digest('hex');
 
   let html: string | undefined;
-
-  if (fs.existsSync(cacheFile)) {
-    try {
-      const cached = JSON.parse(fs.readFileSync(cacheFile, 'utf-8'));
-      if (cached.hash === hash) {
-        html = cached.html;
-      }
-    } catch {
-      // ignore corrupt cache
-    }
-  }
 
   if (!html) {
     const renderedContent = md.render(post.content);
@@ -122,7 +96,6 @@ for (const post of posts) {
       title: post.title || '',
       content: renderedContent,
     });
-    fs.writeFileSync(cacheFile, JSON.stringify({ hash, html }));
   }
 
   renderedSnippets.set(post.filename, html);

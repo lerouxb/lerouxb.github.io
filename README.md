@@ -6,7 +6,6 @@ A minimalist static site generator for a personal blog. Reads YAML+Markdown post
 
 - **Simple input format**: YAML frontmatter + Markdown, with ISO 8601 timestamps in filenames
 - **Reverse-chronological pagination**: Index pages with configurable posts per page
-- **Smart caching**: Rendered HTML snippets cached to avoid slow regeneration
 - **Self-contained output**: All CSS inlined in `<style>` blocks
 - **Syntax highlighting**: Code blocks via Shiki
 - **Type-safe**: Full TypeScript with Zod schema validation
@@ -129,7 +128,6 @@ The workflow is defined in [.github/workflows/deploy.yml](.github/workflows/depl
 static-attic/
 ├── input/              # Source markdown posts
 ├── output/             # Generated HTML (git-ignored)
-├── cache/              # Cached rendered snippets (git-ignored)
 ├── templates/          # HTML templates
 ├── scripts/            # Build and utility scripts
 ├── src/                # Shared TypeScript modules

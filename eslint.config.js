@@ -7,6 +7,6 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   eslintConfigPrettier,
   {
-    ignores: ['node_modules/', 'input/', 'output/', 'cache/', '*.cjs'],
+    ignores: ['node_modules/', 'input/', 'output/', '*.cjs'],
   },
 );
