@@ -3,3 +3,4 @@ example.html
 .DS_Store
 node_modules/
 output/
+prompts/
