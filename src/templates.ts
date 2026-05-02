@@ -8,16 +8,17 @@ export function loadPostTemplate(): (options: {
   datetimeISO: string;
   datetimeReadable: string;
   title: string;
+  source: string;
   content: string;
 }) => string {
-  const source = fs.readFileSync(
+  const src = fs.readFileSync(
     path.join(templatesDir, 'template-post.html'),
     'utf-8',
   );
   return new Function(
     'options',
-    'const { permalink, datetimeISO, datetimeReadable, title, content } = options; return `' +
-      source +
+    'const { permalink, datetimeISO, datetimeReadable, title, source, content } = options; return `' +
+      src +
       '`',
   ) as ReturnType<typeof loadPostTemplate>;
 }
@@ -28,12 +29,12 @@ export function loadOutlineTemplate(): (options: {
   prev: string;
   next: string;
 }) => string {
-  const source = fs.readFileSync(
+  const src = fs.readFileSync(
     path.join(templatesDir, 'template-outline.html'),
     'utf-8',
   );
   return new Function(
     'options',
-    'const { title, posts, prev, next } = options; return `' + source + '`',
+    'const { title, posts, prev, next } = options; return `' + src + '`',
   ) as ReturnType<typeof loadOutlineTemplate>;
 }

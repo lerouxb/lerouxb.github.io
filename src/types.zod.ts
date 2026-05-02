@@ -5,6 +5,7 @@ export const postSchema = z.object({
   data: z.object({
     title: z.string().optional(),
     mood: z.string().optional(),
+    source: z.string().optional(),
     draft: z.boolean().optional(),
   }),
   content: z.string(),

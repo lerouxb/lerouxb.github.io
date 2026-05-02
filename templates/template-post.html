@@ -1,5 +1,8 @@
 <div class="post">
   <div class="post-header">
+    ${source ? `
+    <span class="post-source post-source-${source}">${source}</span>
+    ` : ''}
     <a href="${permalink}"
       ><time datetime="${datetimeISO}">${datetimeReadable}</time></a
     >

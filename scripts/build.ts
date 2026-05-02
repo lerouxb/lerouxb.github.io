@@ -30,6 +30,7 @@ type ParsedPost = {
   datetimeReadable: string;
   title?: string;
   mood?: string;
+  source?: string;
   content: string;
 };
 
@@ -62,6 +63,7 @@ for (const filename of files) {
     datetimeReadable: toDatetimeReadable(date),
     title: data.title,
     mood: data.mood,
+    source: data.source,
     content,
   });
 }
@@ -86,6 +88,7 @@ for (const post of posts) {
       datetimeISO: post.datetimeISO,
       datetimeReadable: post.datetimeReadable,
       title: post.title || '',
+      source: post.source || '',
       content: renderedContent,
     });
   }
